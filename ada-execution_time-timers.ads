@@ -17,7 +17,7 @@ package Ada.Execution_Time.Timers is
    type Timer_Handler is access protected procedure (TM : in out Timer);
 
    Min_Handler_Ceiling : constant System.Any_Priority :=
-     implementation-defined;
+     implementation_defined;
 
    procedure Set_Handler (TM      : in out Timer;
                           In_Time : in     Ada.Real_Time.Time_Span;

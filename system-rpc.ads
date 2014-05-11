@@ -11,7 +11,7 @@ with Ada.Streams; -- see 13.13.1
 
 package System.RPC is
 
-   type Partition_Id is range 0 .. implementation-defined;
+   type Partition_Id is range 0 .. implementation_defined;
 
    Communication_Error : exception;
 

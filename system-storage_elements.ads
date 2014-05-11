@@ -11,11 +11,11 @@ package System.Storage_Elements is
    pragma Pure (System.Storage_Elements);
 
    type Storage_Offset is
-     range implementation-Defined .. implementation-defined;
+     range implementation_defined .. implementation_defined;
 
    subtype Storage_Count is Storage_Offset range 0 .. Storage_Offset'Last;
 
-   type Storage_Element is mod implementation-defined;
+   type Storage_Element is mod implementation_defined;
    for Storage_Element'Size use Storage_Unit;
 
    type Storage_Array is array
@@ -38,7 +38,7 @@ package System.Storage_Elements is
 
    -- Conversion to/from integers:
 
-   type Integer_Address is mod implementation-defined;
+   type Integer_Address is mod implementation_defined;
    function To_Address (Value : Integer_Address) return Address;
    function To_Integer (Value : Address) return Integer_Address;
 

@@ -13,7 +13,7 @@ with System;
 package Ada.Dispatching.Round_Robin is
 
    Default_Quantum : constant Ada.Real_Time.Time_Span :=
-     implementation-defined;
+     implementation_defined;
 
    procedure Set_Quantum (Pri     : in System.Priority;
                           Quantum : in Ada.Real_Time.Time_Span);

@@ -16,7 +16,7 @@ package Ada.Streams.Stream_IO is
 
    type File_Mode is (In_File, Out_File, Append_File);
 
-   type    Count          is range 0 .. implementation-defined;
+   type    Count          is range 0 .. implementation_defined;
    subtype Positive_Count is Count range 1 .. Count'Last;
    -- Index into file, in stream elements.
 

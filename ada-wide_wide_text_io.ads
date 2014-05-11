@@ -15,11 +15,11 @@ package Ada.Wide_Wide_Text_IO is
 
    type File_Mode is (In_File, Out_File, Append_File);
 
-   type Count is range 0 .. implementation-defined;
+   type Count is range 0 .. implementation_defined;
    subtype Positive_Count is Count range 1 .. Count'Last;
    Unbounded : constant Count := 0; -- line and page length
 
-   subtype Field       is Integer range 0 .. implementation-defined;
+   subtype Field       is Integer range 0 .. implementation_defined;
    subtype Number_Base is Integer range 2 .. 16;
 
    type Type_Set is (Lower_Case, Upper_Case);

@@ -29,7 +29,7 @@ package Ada.Numerics.Float_Random is
    procedure Reset (Gen        : in  Generator;
                     From_State : in  State);
 
-   Max_Image_Width : constant := implementation-defined;
+   Max_Image_Width : constant := implementation_defined;
 
    function Image (Of_State    : State)  return String;
    function Value (Coded_State : String) return State;

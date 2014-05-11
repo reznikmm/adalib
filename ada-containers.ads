@@ -11,8 +11,8 @@ package Ada.Containers is
 
    pragma Pure (Containers);
 
-   type Hash_Type is mod implementation-defined;
+   type Hash_Type is mod implementation_defined;
 
-   type Count_Type is range 0 .. implementation-defined;
+   type Count_Type is range 0 .. implementation_defined;
 
 end Ada.Containers;

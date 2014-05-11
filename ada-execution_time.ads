@@ -16,7 +16,7 @@ package Ada.Execution_Time is
 
    CPU_Time_First : constant CPU_Time;
    CPU_Time_Last  : constant CPU_Time;
-   CPU_Time_Unit  : constant := implementation-defined-real-number;
+   CPU_Time_Unit  : constant := implementation_defined;
 
    CPU_Tick : constant Ada.Real_Time.Time_Span;
 

@@ -14,7 +14,7 @@ package Ada.Real_Time is
    Time_First : constant Time;
    Time_Last  : constant Time;
 
-   Time_Unit : constant := implementation-defined-real-number;
+   Time_Unit : constant := implementation_defined;
 
    type Time_Span is private;
 
@@ -117,7 +117,7 @@ package Ada.Real_Time is
    function Minutes (M : in Integer) return Time_Span;
 
    type Seconds_Count is
-     range implementation-defined .. implementation-defined;
+     range implementation_defined .. implementation_defined;
 
    procedure Split (T  : in     Time;
                     SC :    out Seconds_Count;

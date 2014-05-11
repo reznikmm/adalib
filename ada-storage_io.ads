@@ -16,7 +16,7 @@ package Ada.Storage_IO is
    pragma Preelaborate (Storage_IO);
 
    Buffer_Size : constant System.Storage_Elements.Storage_Count
-     := implementation-defined;
+     := implementation_defined;
 
    subtype Buffer_Type is
      System.Storage_Elements.Storage_Array (1 .. Buffer_Size);

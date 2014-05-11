@@ -9,10 +9,10 @@
 
 package Ada.Interrupts.Names is
 
-   --  implementation-defined : constant Interrupt_ID :=
-   --    implementation-defined;
+   --  implementation_defined : constant Interrupt_ID :=
+   --    implementation_defined;
    --      . . .
-   --  implementation-defined : constant Interrupt_ID :=
-   --    implementation-defined;
+   --  implementation_defined : constant Interrupt_ID :=
+   --    implementation_defined;
 
 end Ada.Interrupts.Names;

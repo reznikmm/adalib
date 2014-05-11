@@ -11,13 +11,13 @@ package Ada.Decimal is
 
    pragma Pure (Decimal);
 
-   Max_Scale : constant := implementation-defined;
-   Min_Scale : constant := implementation-defined;
+   Max_Scale : constant := implementation_defined;
+   Min_Scale : constant := implementation_defined;
 
    Min_Delta : constant := 10.0**(-Max_Scale);
    Max_Delta : constant := 10.0**(-Min_Scale);
 
-   Max_Decimal_Digits : constant := implementation-defined;
+   Max_Decimal_Digits : constant := implementation_defined;
 
    generic
       type Dividend_Type is delta <> digits <>;

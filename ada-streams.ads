@@ -13,9 +13,9 @@ package Ada.Streams is
    type Root_Stream_Type is abstract tagged limited private;
    pragma Preelaborable_Initialization (Root_Stream_Type);
 
-   type Stream_Element is mod implementation-defined;
+   type Stream_Element is mod implementation_defined;
    type Stream_Element_Offset is range
-     implementation-defined .. implementation-defined;
+     implementation_defined .. implementation_defined;
 
    subtype Stream_Element_Count is
      Stream_Element_Offset range 0..Stream_Element_Offset'Last;

@@ -20,7 +20,7 @@ package Ada.Execution_Time.Group_Budgets is
      array (Positive range <>) of Ada.Task_Identification.Task_Id;
 
    Min_Handler_Ceiling : constant System.Any_Priority
-     := implementation-defined;
+     := implementation_defined;
 
    procedure Add_Task (GB : in out Group_Budget;
                        T  : in     Ada.Task_Identification.Task_Id);

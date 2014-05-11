@@ -34,7 +34,7 @@ package Standard is
    -- The integer type root_integer and the
    -- corresponding universal type universal_integer are predefined.
 
-   type Integer is range implementation-defined .. implementation-defined;
+   type Integer is range implementation_defined .. implementation_defined;
 
    subtype Natural  is Integer range 0 .. Integer'Last;
    subtype Positive is Integer range 1 .. Integer'Last;
@@ -72,7 +72,7 @@ package Standard is
    -- The floating point type root_real and the
    -- corresponding universal type universal_real are predefined.
 
-   type Float is digits implementation-defined;
+   type Float is digits implementation_defined;
 
    -- The predefined operators for this type are as follows:
 
@@ -276,8 +276,8 @@ package Standard is
 
    -- The predefined operators for this type correspond to those for String.
 
-   type Duration is delta implementation-defined
-     range implementation-defined .. implementation-defined;
+   type Duration is delta implementation_defined
+     range implementation_defined .. implementation_defined;
 
       -- The predefined operators for the type Duration are the same as for
       -- any fixed point type.

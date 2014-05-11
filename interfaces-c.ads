@@ -12,45 +12,45 @@ package Interfaces.C is
 
    -- Declarations based on C's <limits.h>
 
-   CHAR_BIT  : constant := implementation-defined;  -- typically 8
-   SCHAR_MIN : constant := implementation-defined;  -- typically -128
-   SCHAR_MAX : constant := implementation-defined;  -- typically 127
-   UCHAR_MAX : constant := implementation-defined;  -- typically 255
+   CHAR_BIT  : constant := implementation_defined;  -- typically 8
+   SCHAR_MIN : constant := implementation_defined;  -- typically -128
+   SCHAR_MAX : constant := implementation_defined;  -- typically 127
+   UCHAR_MAX : constant := implementation_defined;  -- typically 255
 
    -- Signed and Unsigned Integers
-   type int   is range implementation-defined .. implementation-defined;
-   type short is range implementation-defined .. implementation-defined;
-   type long  is range implementation-defined .. implementation-defined;
+   type int   is range implementation_defined .. implementation_defined;
+   type short is range implementation_defined .. implementation_defined;
+   type long  is range implementation_defined .. implementation_defined;
 
    type signed_char is range SCHAR_MIN .. SCHAR_MAX;
    for signed_char'Size use CHAR_BIT;
 
-   type unsigned       is mod implementation-defined;
-   type unsigned_short is mod implementation-defined;
-   type unsigned_long  is mod implementation-defined;
+   type unsigned       is mod implementation_defined;
+   type unsigned_short is mod implementation_defined;
+   type unsigned_long  is mod implementation_defined;
 
    type unsigned_char is mod (UCHAR_MAX+1);
    for unsigned_char'Size use CHAR_BIT;
 
-   subtype plain_char is unsigned_char; --  implementation-defined;
+   subtype plain_char is unsigned_char; --  implementation_defined;
 
-   type ptrdiff_t is range implementation-defined .. implementation-defined;
+   type ptrdiff_t is range implementation_defined .. implementation_defined;
 
-   type size_t is mod implementation-defined;
+   type size_t is mod implementation_defined;
 
    -- Floating Point
 
-   type C_float     is digits implementation-defined;
+   type C_float     is digits implementation_defined;
 
-   type double      is digits implementation-defined;
+   type double      is digits implementation_defined;
 
-   type long_double is digits implementation-defined;
+   type long_double is digits implementation_defined;
 
    -- Characters and Strings
 
-   type char is ('x'); --  implementation-defined character type;
+   type char is ('x'); --  implementation_defined character type;
 
-   nul : constant char := implementation-defined;
+   nul : constant char := implementation_defined;
 
    function To_C   (Item : in Character) return char;
 
@@ -82,9 +82,9 @@ package Interfaces.C is
 
    -- Wide Character and Wide String
 
-   type wchar_t is (' ');  --  implementation-defined char type;
+   type wchar_t is (' ');  --  implementation_defined char type;
 
-   wide_nul : constant wchar_t := implementation-defined;
+   wide_nul : constant wchar_t := implementation_defined;
 
    function To_C   (Item : in Wide_Character) return wchar_t;
    function To_Ada (Item : in wchar_t       ) return Wide_Character;
@@ -115,9 +115,9 @@ package Interfaces.C is
 
    --  ISO/IEC 10646:2003 compatible types defined by ISO/IEC TR 19769:2004.
 
-   type char16_t is ('x');  --  implementation-defined character type
+   type char16_t is ('x');  --  implementation_defined character type
 
-   char16_nul : constant char16_t := implementation-defined;
+   char16_nul : constant char16_t := implementation_defined;
 
    function To_C (Item : in Wide_Character) return char16_t;
 
@@ -146,9 +146,9 @@ package Interfaces.C is
                      Count    :    out Natural;
                      Trim_Nul : in     Boolean := True);
 
-   type char32_t is ('x');  --  implementation-defined character type
+   type char32_t is ('x');  --  implementation_defined character type
 
-   char32_nul : constant char32_t := implementation-defined;
+   char32_nul : constant char32_t := implementation_defined;
 
    function To_C (Item : in Wide_Wide_Character) return char32_t;
 

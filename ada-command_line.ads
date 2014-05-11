@@ -16,7 +16,7 @@ package Ada.Command_Line is
 
    function Command_Name return String;
 
-   type Exit_Status is range implementation-defined .. implementation-defined;
+   type Exit_Status is range implementation_defined .. implementation_defined;
 
    Success : constant Exit_Status;
    Failure : constant Exit_Status;

@@ -58,7 +58,7 @@ package Ada.Directories is
 
    type File_Kind is (Directory, Ordinary_File, Special_File);
 
-   type File_Size is range 0 .. implementation-defined;
+   type File_Size is range 0 .. implementation_defined;
 
    function Exists (Name : in String) return Boolean;
 
