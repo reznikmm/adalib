@@ -34,6 +34,8 @@ package Standard is
    -- The integer type root_integer and the
    -- corresponding universal type universal_integer are predefined.
 
+--   type root_integer is range implementation_defined .. implementation_defined;
+
    type Integer is range implementation_defined .. implementation_defined;
 
    subtype Natural  is Integer range 0 .. Integer'Last;
@@ -71,6 +73,8 @@ package Standard is
 
    -- The floating point type root_real and the
    -- corresponding universal type universal_real are predefined.
+
+--   type root_real is digits implementation_defined;
 
    type Float is digits implementation_defined;
 
