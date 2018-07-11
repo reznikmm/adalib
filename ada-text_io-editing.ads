@@ -1,11 +1,11 @@
-------------------------------------------------------------------------------
---              A d a   r u n - t i m e   s p e c i f i c a t i o n         --
---       ASIS implementation for Gela project, a portable Ada compiler      --
---                          http://gela.ada-ru.org                          --
---                     - - - - - - - - - - - - - - -                        --
---          Read copyright and license at the end of ada.ads file           --
-------------------------------------------------------------------------------
---  $Revision$ $Date$
+--                    Standard Ada library specification
+--  Copyright (c) 2003-2018 Maxim Reznik <reznikmm@gmail.com>
+--  Copyright (c) 2004-2016 AXE Consultants
+--  Copyright (c) 2004, 2005, 2006 Ada-Europe
+--  Copyright (c) 2000 The MITRE Corporation, Inc.
+--  Copyright (c) 1992, 1993, 1994, 1995 Intermetrics, Inc.
+--  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
+---------------------------------------------------------------------------
 
 package Ada.Text_IO.Editing is
 

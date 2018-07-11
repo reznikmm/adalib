@@ -1,41 +1,12 @@
-------------------------------------------------------------------------------
---              A d a   r u n - t i m e   s p e c i f i c a t i o n         --
---       ASIS implementation for Gela project, a portable Ada compiler      --
---                          http://gela.ada-ru.org                          --
---                     - - - - - - - - - - - - - - -                        --
---            Read copyright and license at the end of this file            --
-------------------------------------------------------------------------------
---  $Revision$ $Date$
+--                    Standard Ada library specification
+--  Copyright (c) 2003-2018 Maxim Reznik <reznikmm@gmail.com>
+--  Copyright (c) 2004-2016 AXE Consultants
+--  Copyright (c) 2004, 2005, 2006 Ada-Europe
+--  Copyright (c) 2000 The MITRE Corporation, Inc.
+--  Copyright (c) 1992, 1993, 1994, 1995 Intermetrics, Inc.
+--  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
+---------------------------------------------------------------------------
 
 package Ada is
    pragma Pure (Ada);
 end Ada;
-
-------------------------------------------------------------------------------
---  Copyright (c) 2006-2013, Maxim Reznik
---  All rights reserved.
---
---  Redistribution and use in source and binary forms, with or without
---  modification, are permitted provided that the following conditions are met:
---
---     * Redistributions of source code must retain the above copyright notice,
---       this list of conditions and the following disclaimer.
---     * Redistributions in binary form must reproduce the above copyright
---       notice, this list of conditions and the following disclaimer in the
---       documentation and/or other materials provided with the distribution.
---     * Neither the name of the Maxim Reznik, IE nor the names of its
---       contributors may be used to endorse or promote products derived from
---       this software without specific prior written permission.
---
---  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
---  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
---  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
---  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
---  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
---  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
---  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
---  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
---  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
---  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
---  POSSIBILITY OF SUCH DAMAGE.
-------------------------------------------------------------------------------
