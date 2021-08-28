@@ -26,6 +26,11 @@ package Ada.Characters.Handling is
    function Is_Hexadecimal_Digit (Item : in Character) return Boolean;
    function Is_Alphanumeric      (Item : in Character) return Boolean;
    function Is_Special           (Item : in Character) return Boolean;
+   function Is_Line_Terminator   (Item : in Character) return Boolean;
+   function Is_Mark              (Item : in Character) return Boolean;
+   function Is_Other_Format      (Item : in Character) return Boolean;
+   function Is_Punctuation_Connector (Item : in Character) return Boolean;
+   function Is_Space             (Item : in Character) return Boolean;
 
    --  Conversion functions for Character and String
 

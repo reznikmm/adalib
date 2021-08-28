@@ -195,6 +195,12 @@ package Ada.Strings.Unbounded is
                          First  : out Positive;
                          Last   : out Natural);
 
+   procedure Find_Token (Source : in Unbounded_String;
+                         Set    : in Maps.Character_Set;
+                         Test   : in Membership;
+                         First  : out Positive;
+                         Last   : out Natural);
+
    -- String translation subprograms
 
    function Translate (Source  : in Unbounded_String;
@@ -303,6 +309,3 @@ private
    pragma Import (Ada, Null_Unbounded_String);
 
 end Ada.Strings.Unbounded;
-
-
-

@@ -9,6 +9,7 @@
 
 with Ada.IO_Exceptions;
 package Ada.Streams.Stream_IO is
+   pragma Preelaborate(Stream_IO);
 
    type Stream_Access is access all Root_Stream_Type'Class;
 

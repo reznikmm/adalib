@@ -13,6 +13,8 @@ package Ada.Environment_Variables is
 
    function Value (Name : in String) return String;
 
+   function Value (Name : in String; Default : in String) return String;
+
    function Exists (Name : in String) return Boolean;
 
    procedure Set (Name  : in String;
@@ -23,7 +25,7 @@ package Ada.Environment_Variables is
    procedure Clear;
 
    procedure Iterate
-    (Process : not null access procedure
+      (Process : not null access procedure
                                 (Name  : in String;
                                  Value : in String));
 

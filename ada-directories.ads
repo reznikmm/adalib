@@ -54,6 +54,11 @@ package Ada.Directories is
                      Extension            : in String := "")
      return String;
 
+   type Name_Case_Kind is
+     (Unknown, Case_Sensitive, Case_Insensitive, Case_Preserving);
+
+   function Name_Case_Equivalence (Name : in String) return Name_Case_Kind;
+
    --  File and directory queries:
 
    type File_Kind is (Directory, Ordinary_File, Special_File);

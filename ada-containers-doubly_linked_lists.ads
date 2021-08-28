@@ -7,38 +7,45 @@
 --  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
 ---------------------------------------------------------------------------
 
+
+with Ada.Iterator_Interfaces;
 generic
    type Element_Type is private;
-
-   with function "=" (Left  : in Element_Type;
-                      Right : in Element_Type)
-                     return Boolean is <>;
-
+   with function "=" (Left, Right : Element_Type)
+      return Boolean is <>;
 package Ada.Containers.Doubly_Linked_Lists is
+   pragma Preelaborate(Doubly_Linked_Lists);
+   pragma Remote_Types(Doubly_Linked_Lists);
 
-   pragma Preelaborate (Doubly_Linked_Lists);
-
-   type List is tagged private;
-   pragma Preelaborable_Initialization (List);
+   type List is tagged private
+      with Constant_Indexing => Constant_Reference,
+           Variable_Indexing => Reference,
+           Default_Iterator  => Iterate,
+           Iterator_Element  => Element_Type;
+   pragma Preelaborable_Initialization(List);
 
    type Cursor is private;
-   pragma Preelaborable_Initialization (Cursor);
+   pragma Preelaborable_Initialization(Cursor);
 
    Empty_List : constant List;
 
    No_Element : constant Cursor;
 
-   function "=" (Left  : in List;
-                 Right : in List)
-                return Boolean;
+   function Has_Element (Position : Cursor) return Boolean;
 
-   function Length (Container : in List) return Count_Type;
+   package List_Iterator_Interfaces is new
+       Ada.Iterator_Interfaces (Cursor, Has_Element);
 
-   function Is_Empty (Container : in List) return Boolean;
+   function "=" (Left, Right : List) return Boolean;
+
+   function Length (Container : List) return Count_Type;
+
+   function Is_Empty (Container : List) return Boolean;
 
    procedure Clear (Container : in out List);
 
-   function Element (Position : in Cursor) return Element_Type;
+   function Element (Position : Cursor)
+      return Element_Type;
 
    procedure Replace_Element (Container : in out List;
                               Position  : in     Cursor;
@@ -51,7 +58,27 @@ package Ada.Containers.Doubly_Linked_Lists is
    procedure Update_Element
      (Container : in out List;
       Position  : in     Cursor;
-      Process   : not null access procedure (Element : in out Element_Type));
+      Process   : not null access procedure
+                      (Element : in out Element_Type));
+
+   type Constant_Reference_Type
+         (Element : not null access constant Element_Type) is private
+      with Implicit_Dereference => Element;
+
+   type Reference_Type (Element : not null access Element_Type) is private
+      with Implicit_Dereference => Element;
+
+   function Constant_Reference (Container : aliased in List;
+                                Position  : in Cursor)
+      return Constant_Reference_Type;
+
+   function Reference (Container : aliased in out List;
+                       Position  : in Cursor)
+      return Reference_Type;
+
+   procedure Assign (Target : in out List; Source : in List);
+
+   function Copy (Source : List) return List;
 
    procedure Move (Target : in out List;
                    Source : in out List);
@@ -93,57 +120,54 @@ package Ada.Containers.Doubly_Linked_Lists is
    procedure Reverse_Elements (Container : in out List);
 
    procedure Swap (Container : in out List;
-                   I         : in     Cursor;
-                   J         : in     Cursor);
+                   I, J      : in     Cursor);
 
    procedure Swap_Links (Container : in out List;
-                         I         : in     Cursor;
-                         J         : in     Cursor);
+                         I, J      : in     Cursor);
 
-   procedure Splice (Target : in out List;
-                     Before : in     Cursor;
-                     Source : in out List);
+   procedure Splice (Target   : in out List;
+                     Before   : in     Cursor;
+                     Source   : in out List);
 
    procedure Splice (Target   : in out List;
                      Before   : in     Cursor;
                      Source   : in out List;
                      Position : in out Cursor);
 
-   procedure Splice (Container : in out List;
-                     Before    : in     Cursor;
-                     Position  : in     Cursor);
+   procedure Splice (Container: in out List;
+                     Before   : in     Cursor;
+                     Position : in     Cursor);
 
-   function First (Container : in List) return Cursor;
+   function First (Container : List) return Cursor;
 
-   function First_Element (Container : in List) return Element_Type;
+   function First_Element (Container : List)
+      return Element_Type;
 
-   function Last (Container : in List) return Cursor;
+   function Last (Container : List) return Cursor;
 
-   function Last_Element (Container : in List) return Element_Type;
+   function Last_Element (Container : List)
+      return Element_Type;
 
-   function Next (Position : in Cursor) return Cursor;
+   function Next (Position : Cursor) return Cursor;
 
-   function Previous (Position : in Cursor) return Cursor;
+   function Previous (Position : Cursor) return Cursor;
 
    procedure Next (Position : in out Cursor);
 
    procedure Previous (Position : in out Cursor);
 
-   function Find (Container : in List;
-                  Item      : in Element_Type;
-                  Position  : in Cursor := No_Element)
-                 return Cursor;
+   function Find (Container : List;
+                  Item      : Element_Type;
+                  Position  : Cursor := No_Element)
+      return Cursor;
 
-   function Reverse_Find (Container : in List;
-                          Item      : in Element_Type;
-                          Position  : in Cursor := No_Element)
-                         return Cursor;
+   function Reverse_Find (Container : List;
+                          Item      : Element_Type;
+                          Position  : Cursor := No_Element)
+      return Cursor;
 
-   function Contains (Container : in List;
-                      Item      : in Element_Type)
-                     return Boolean;
-
-   function Has_Element (Position : in Cursor) return Boolean;
+   function Contains (Container : List;
+                      Item      : Element_Type) return Boolean;
 
    procedure Iterate
      (Container : in List;
@@ -153,30 +177,28 @@ package Ada.Containers.Doubly_Linked_Lists is
      (Container : in List;
       Process   : not null access procedure (Position : in Cursor));
 
-   generic
-      with function "<" (Left  : in Element_Type;
-                         Right : in Element_Type)
-                        return Boolean is <>;
+   function Iterate (Container : in List)
+      return List_Iterator_Interfaces.Reversible_Iterator'Class;
 
+   function Iterate (Container : in List; Start : in Cursor)
+      return List_Iterator_Interfaces.Reversible_Iterator'Class;
+
+   generic
+      with function "<" (Left, Right : Element_Type)
+         return Boolean is <>;
    package Generic_Sorting is
 
-      function Is_Sorted (Container : in List) return Boolean;
+      function Is_Sorted (Container : List) return Boolean;
 
       procedure Sort (Container : in out List);
 
-      procedure Merge (Target : in out List;
-                       Source : in out List);
+      procedure Merge (Target  : in out List;
+                       Source  : in out List);
 
    end Generic_Sorting;
 
 private
 
-   type List is tagged null record;
-
-   Empty_List : constant List := (null record);
-
-   type Cursor is null record;
-
-   No_Element : constant Cursor := (null record);
+   -- not specified by the language
 
 end Ada.Containers.Doubly_Linked_Lists;
