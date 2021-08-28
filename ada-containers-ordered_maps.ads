@@ -7,64 +7,91 @@
 --  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
 ---------------------------------------------------------------------------
 
+with Ada.Iterator_Interfaces;
 generic
    type Key_Type is private;
    type Element_Type is private;
-
-   with function "<" (Left  : in Key_Type;
-                      Right : in Key_Type)
-          return Boolean is <>;
-
-   with function "=" (Left  : in Element_Type;
-                      Right : in Element_Type)
-          return Boolean is <>;
-
+   with function "<" (Left, Right : Key_Type) return Boolean is <>;
+   with function "=" (Left, Right : Element_Type) return Boolean is <>;
 package Ada.Containers.Ordered_Maps is
+   pragma Preelaborate(Ordered_Maps);
+   pragma Remote_Types(Ordered_Maps);
 
-   pragma Preelaborate (Ordered_Maps);
+   function Equivalent_Keys (Left, Right : Key_Type) return Boolean;
 
-   function Equivalent_Keys (Left  : in Key_Type;
-                             Right : in Key_Type)
-     return Boolean;
-
-   type Map is tagged private;
-   pragma Preelaborable_Initialization (Map);
+   type Map is tagged private
+      with Constant_Indexing => Constant_Reference,
+           Variable_Indexing => Reference,
+           Default_Iterator  => Iterate,
+           Iterator_Element  => Element_Type;
+   pragma Preelaborable_Initialization(Map);
 
    type Cursor is private;
-   pragma Preelaborable_Initialization (Cursor);
+   pragma Preelaborable_Initialization(Cursor);
 
    Empty_Map : constant Map;
 
    No_Element : constant Cursor;
 
-   function "=" (Left  : in Map;
-                 Right : in Map)
-     return Boolean;
+   function Has_Element (Position : Cursor) return Boolean;
 
-   function Length (Container : in Map) return Count_Type;
+   package Map_Iterator_Interfaces is new
+       Ada.Iterator_Interfaces (Cursor, Has_Element);
 
-   function Is_Empty (Container : in Map) return Boolean;
+   function "=" (Left, Right : Map) return Boolean;
+
+   function Length (Container : Map) return Count_Type;
+
+   function Is_Empty (Container : Map) return Boolean;
 
    procedure Clear (Container : in out Map);
 
-   function Key (Position : in Cursor) return Key_Type;
+   function Key (Position : Cursor) return Key_Type;
 
-   function Element (Position : in Cursor) return Element_Type;
+   function Element (Position : Cursor) return Element_Type;
 
    procedure Replace_Element (Container : in out Map;
                               Position  : in     Cursor;
                               New_Item  : in     Element_Type);
 
    procedure Query_Element
-    (Position : in Cursor;
-     Process  : not null access procedure (Key     : in Key_Type;
-                                           Element : in Element_Type));
+     (Position : in Cursor;
+      Process  : not null access procedure (Key     : in Key_Type;
+                                            Element : in Element_Type));
 
    procedure Update_Element
-    (Container : in out Map;
-     Position  : in     Cursor;
-     Process   : not null access procedure (Key     : in     Key_Type;
-                                            Element : in out Element_Type));
+     (Container : in out Map;
+      Position  : in     Cursor;
+      Process   : not null access procedure
+                      (Key     : in     Key_Type;
+                       Element : in out Element_Type));
+
+   type Constant_Reference_Type
+         (Element : not null access constant Element_Type) is private
+      with Implicit_Dereference => Element;
+
+   type Reference_Type (Element : not null access Element_Type) is private
+      with Implicit_Dereference => Element;
+
+   function Constant_Reference (Container : aliased in Map;
+                                Position  : in Cursor)
+      return Constant_Reference_Type;
+
+   function Reference (Container : aliased in out Map;
+                       Position  : in Cursor)
+      return Reference_Type;
+
+   function Constant_Reference (Container : aliased in Map;
+                                Key       : in Key_Type)
+      return Constant_Reference_Type;
+
+   function Reference (Container : aliased in out Map;
+                       Key       : in Key_Type)
+      return Reference_Type;
+
+   procedure Assign (Target : in out Map; Source : in Map);
+
+   function Copy (Source : Map) return Map;
 
    procedure Move (Target : in out Map;
                    Source : in out Map);
@@ -105,81 +132,72 @@ package Ada.Containers.Ordered_Maps is
 
    procedure Delete_Last (Container : in out Map);
 
-   function First (Container : in Map) return Cursor;
+   function First (Container : Map) return Cursor;
 
-   function First_Element (Container : in Map) return Element_Type;
+   function First_Element (Container : Map) return Element_Type;
 
-   function First_Key (Container : in Map) return Key_Type;
+   function First_Key (Container : Map) return Key_Type;
 
-   function Last (Container : in Map) return Cursor;
+   function Last (Container : Map) return Cursor;
 
-   function Last_Element (Container : in Map) return Element_Type;
+   function Last_Element (Container : Map) return Element_Type;
 
-   function Last_Key (Container : in Map) return Key_Type;
+   function Last_Key (Container : Map) return Key_Type;
 
-   function Next (Position : in Cursor) return Cursor;
+   function Next (Position : Cursor) return Cursor;
 
    procedure Next (Position : in out Cursor);
 
-   function Previous (Position : in Cursor) return Cursor;
+   function Previous (Position : Cursor) return Cursor;
 
    procedure Previous (Position : in out Cursor);
 
-   function Find (Container : in Map;
-                  Key       : in Key_Type)
-     return Cursor;
+   function Find (Container : Map;
+                  Key       : Key_Type) return Cursor;
 
-   function Element (Container : in Map;
-                     Key       : in Key_Type)
-     return Element_Type;
+   function Element (Container : Map;
+                     Key       : Key_Type) return Element_Type;
 
-   function Floor (Container : in Map;
-                   Key       : in Key_Type)
-     return Cursor;
+   function Floor (Container : Map;
+                   Key       : Key_Type) return Cursor;
 
-   function Ceiling (Container : in Map;
-                     Key       : in Key_Type)
-     return Cursor;
+   function Ceiling (Container : Map;
+                     Key       : Key_Type) return Cursor;
 
-   function Contains (Container : in Map;
-                      Key       : in Key_Type)
-     return Boolean;
+   function Contains (Container : Map;
+                      Key       : Key_Type) return Boolean;
 
-   function Has_Element (Position : in Cursor) return Boolean;
 
-   function "<" (Left  : in Cursor;
-                 Right : in Cursor)
-     return Boolean;
 
-   function ">" (Left  : in Cursor;
-                 Right : in Cursor)
-     return Boolean;
+   function "<" (Left, Right : Cursor) return Boolean;
 
-   function "<" (Left  : in Cursor;
-                 Right : in Key_Type)
-     return Boolean;
+   function ">" (Left, Right : Cursor) return Boolean;
 
-   function ">" (Left  : in Cursor;
-                 Right : in Key_Type)
-     return Boolean;
+   function "<" (Left : Cursor; Right : Key_Type) return Boolean;
 
-   function "<" (Left  : in Key_Type;
-                 Right : in Cursor)
-     return Boolean;
+   function ">" (Left : Cursor; Right : Key_Type) return Boolean;
 
-   function ">" (Left  : in Key_Type;
-                 Right : in Cursor)
-     return Boolean;
+   function "<" (Left : Key_Type; Right : Cursor) return Boolean;
+
+   function ">" (Left : Key_Type; Right : Cursor) return Boolean;
 
    procedure Iterate
-    (Container : in Map;
-     Process   : not null access procedure (Position : in Cursor));
+     (Container : in Map;
+      Process   : not null access procedure (Position : in Cursor));
 
    procedure Reverse_Iterate
-    (Container : in Map;
-     Process   : not null access procedure (Position : in Cursor));
+     (Container : in Map;
+      Process   : not null access procedure (Position : in Cursor));
+
+   function Iterate (Container : in Map)
+      return Map_Iterator_Interfaces.Reversible_Iterator'Class;
+
+   function Iterate (Container : in Map; Start : in Cursor)
+      return Map_Iterator_Interfaces.Reversible_Iterator'Class;
 
 private
+
+   -- not specified by the language
 
    type Map is tagged null record;
 

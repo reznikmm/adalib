@@ -7,60 +7,68 @@
 --  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
 ---------------------------------------------------------------------------
 
+with Ada.Iterator_Interfaces;
 generic
    type Element_Type is private;
-
-   with function "<" (Left  : in Element_Type;
-                      Right : in Element_Type)
-          return Boolean is <>;
-
-   with function "=" (Left  : in Element_Type;
-                      Right : in Element_Type)
-          return Boolean is <>;
-
+   with function "<" (Left, Right : Element_Type) return Boolean is <>;
+   with function "=" (Left, Right : Element_Type) return Boolean is <>;
 package Ada.Containers.Ordered_Sets is
+   pragma Preelaborate(Ordered_Sets);
+   pragma Remote_Types(Ordered_Sets);
 
-   pragma Preelaborate (Ordered_Sets);
+   function Equivalent_Elements (Left, Right : Element_Type) return Boolean;
 
-   function Equivalent_Elements (Left  : in Element_Type;
-                                 Right : in Element_Type)
-     return Boolean;
-
-   type Set is tagged private;
-   pragma Preelaborable_Initialization (Set);
+   type Set is tagged private
+      with Constant_Indexing => Constant_Reference,
+           Default_Iterator  => Iterate,
+           Iterator_Element  => Element_Type;
+   pragma Preelaborable_Initialization(Set);
 
    type Cursor is private;
-   pragma Preelaborable_Initialization (Cursor);
+   pragma Preelaborable_Initialization(Cursor);
 
    Empty_Set : constant Set;
 
    No_Element : constant Cursor;
 
-   function "=" (Left  : in Set;
-                 Right : in Set)
-     return Boolean;
+   function Has_Element (Position : Cursor) return Boolean;
 
-   function Equivalent_Sets (Left  : in Set;
-                             Right : in Set)
-     return Boolean;
+   package Set_Iterator_Interfaces is new
+       Ada.Iterator_Interfaces (Cursor, Has_Element);
 
-   function To_Set (New_Item : in Element_Type) return Set;
+   function "=" (Left, Right : Set) return Boolean;
 
-   function Length (Container : in Set) return Count_Type;
+   function Equivalent_Sets (Left, Right : Set) return Boolean;
 
-   function Is_Empty (Container : in Set) return Boolean;
+   function To_Set (New_Item : Element_Type) return Set;
+
+   function Length (Container : Set) return Count_Type;
+
+   function Is_Empty (Container : Set) return Boolean;
 
    procedure Clear (Container : in out Set);
 
-   function Element (Position : in Cursor) return Element_Type;
+   function Element (Position : Cursor) return Element_Type;
 
    procedure Replace_Element (Container : in out Set;
                               Position  : in     Cursor;
                               New_Item  : in     Element_Type);
 
    procedure Query_Element
-    (Position : in Cursor;
-     Process  : not null access procedure (Element : in Element_Type));
+     (Position : in Cursor;
+      Process  : not null access procedure (Element : in Element_Type));
+
+   type Constant_Reference_Type
+         (Element : not null access constant Element_Type) is private
+      with Implicit_Dereference => Element;
+
+   function Constant_Reference (Container : aliased in Set;
+                                Position  : in Cursor)
+      return Constant_Reference_Type;
+
+   procedure Assign (Target : in out Set; Source : in Set);
+
+   function Copy (Source : Set) return Set;
 
    procedure Move (Target : in out Set;
                    Source : in out Set);
@@ -95,176 +103,168 @@ package Ada.Containers.Ordered_Sets is
    procedure Union (Target : in out Set;
                     Source : in     Set);
 
-   function Union (Left  : in Set;
-                   Right : in Set)
-     return Set;
+   function Union (Left, Right : Set) return Set;
 
-   function "or" (Left  : in Set;
-                  Right : in Set)
-     return Set renames Union;
+   function "or" (Left, Right : Set) return Set renames Union;
 
    procedure Intersection (Target : in out Set;
                            Source : in     Set);
 
-   function Intersection (Left  : in Set;
-                          Right : in Set)
-     return Set;
+   function Intersection (Left, Right : Set) return Set;
 
-   function "and" (Left  : in Set;
-                   Right : in Set)
-     return Set renames Intersection;
+   function "and" (Left, Right : Set) return Set renames Intersection;
 
    procedure Difference (Target : in out Set;
                          Source : in     Set);
 
-   function Difference (Left  : in Set;
-                        Right : in Set)
-     return Set;
+   function Difference (Left, Right : Set) return Set;
 
-   function "-" (Left  : in Set;
-                 Right : in Set)
-     return Set renames Difference;
+   function "-" (Left, Right : Set) return Set renames Difference;
 
    procedure Symmetric_Difference (Target : in out Set;
                                    Source : in     Set);
 
-   function Symmetric_Difference (Left  : in Set;
-                                  Right : in Set)
-     return Set;
+   function Symmetric_Difference (Left, Right : Set) return Set;
 
-   function "xor" (Left  : in Set;
-                   Right : in Set)
-     return Set renames Symmetric_Difference;
+   function "xor" (Left, Right : Set) return Set renames
+      Symmetric_Difference;
 
-   function Overlap (Left  : in Set;
-                     Right : in Set)
-     return Boolean;
+   function Overlap (Left, Right : Set) return Boolean;
 
-   function Is_Subset (Subset : in Set;
-                       Of_Set : in Set)
-     return Boolean;
+   function Is_Subset (Subset : Set;
+                       Of_Set : Set) return Boolean;
 
-   function First (Container : in Set) return Cursor;
+   function First (Container : Set) return Cursor;
 
-   function First_Element (Container : in Set) return Element_Type;
+   function First_Element (Container : Set) return Element_Type;
 
-   function Last (Container : in Set) return Cursor;
+   function Last (Container : Set) return Cursor;
 
-   function Last_Element (Container : in Set) return Element_Type;
+   function Last_Element (Container : Set) return Element_Type;
 
-   function Next (Position : in Cursor) return Cursor;
+   function Next (Position : Cursor) return Cursor;
 
    procedure Next (Position : in out Cursor);
 
-   function Previous (Position : in Cursor) return Cursor;
+   function Previous (Position : Cursor) return Cursor;
 
    procedure Previous (Position : in out Cursor);
 
-   function Find (Container : in Set;
-                  Item      : in Element_Type)
-     return Cursor;
+   function Find (Container : Set;
+                  Item      : Element_Type)
+      return Cursor;
 
-   function Floor (Container : in Set;
-                   Item      : in Element_Type)
-     return Cursor;
+   function Floor (Container : Set;
+                   Item      : Element_Type)
+      return Cursor;
 
-   function Ceiling (Container : in Set;
-                     Item      : in Element_Type)
-     return Cursor;
+   function Ceiling (Container : Set;
+                     Item      : Element_Type)
+      return Cursor;
 
-   function Contains (Container : in Set;
-                      Item      : in Element_Type)
-     return Boolean;
+   function Contains (Container : Set;
+                      Item      : Element_Type) return Boolean;
 
-   function Has_Element (Position : in Cursor) return Boolean;
 
-   function "<" (Left  : in Cursor;
-                 Right : in Cursor)
-     return Boolean;
 
-   function ">" (Left  : in Cursor;
-                 Right : in Cursor)
-     return Boolean;
+   function "<" (Left, Right : Cursor) return Boolean;
 
-   function "<" (Left  : in Cursor;
-                 Right : in Element_Type)
-     return Boolean;
+   function ">" (Left, Right : Cursor) return Boolean;
 
-   function ">" (Left  : in Cursor;
-                 Right : in Element_Type)
-     return Boolean;
+   function "<" (Left : Cursor; Right : Element_Type)
+      return Boolean;
 
-   function "<" (Left  : in Element_Type;
-                 Right : in Cursor)
-     return Boolean;
+   function ">" (Left : Cursor; Right : Element_Type)
+      return Boolean;
 
-   function ">" (Left  : in Element_Type;
-                 Right : in Cursor)
-     return Boolean;
+   function "<" (Left : Element_Type; Right : Cursor)
+      return Boolean;
+
+   function ">" (Left : Element_Type; Right : Cursor)
+      return Boolean;
 
    procedure Iterate
-    (Container : in Set;
-     Process   : not null access procedure (Position : in Cursor));
+     (Container : in Set;
+      Process   : not null access procedure (Position : in Cursor));
 
    procedure Reverse_Iterate
-    (Container : in Set;
-     Process   : not null access procedure (Position : in Cursor));
+     (Container : in Set;
+      Process   : not null access procedure (Position : in Cursor));
+
+   function Iterate (Container : in Set)
+      return Set_Iterator_Interfaces.Reversible_Iterator'Class;
+
+   function Iterate (Container : in Set; Start : in Cursor)
+      return Set_Iterator_Interfaces.Reversible_Iterator'Class;
 
    generic
       type Key_Type (<>) is private;
-
-      with function Key (Element : in Element_Type) return Key_Type;
-
-      with function "<" (Left  : in Key_Type;
-                         Right : in Key_Type)
-             return Boolean is <>;
-
+      with function Key (Element : Element_Type) return Key_Type;
+      with function "<" (Left, Right : Key_Type)
+         return Boolean is <>;
    package Generic_Keys is
 
-      function Equivalent_Keys (Left  : in Key_Type;
-                                Right : in Key_Type)
-        return Boolean;
+       function Equivalent_Keys (Left, Right : Key_Type)
+          return Boolean;
 
-      function Key (Position : in Cursor) return Key_Type;
+       function Key (Position : Cursor) return Key_Type;
 
-      function Element (Container : in Set;
-                        Key       : in Key_Type)
-        return Element_Type;
+       function Element (Container : Set;
+                         Key       : Key_Type)
+          return Element_Type;
 
-      procedure Replace (Container : in out Set;
-                         Key       : in     Key_Type;
-                         New_Item  : in     Element_Type);
+       procedure Replace (Container : in out Set;
+                          Key       : in     Key_Type;
+                          New_Item  : in     Element_Type);
 
-      procedure Exclude (Container : in out Set;
+       procedure Exclude (Container : in out Set;
+                          Key       : in     Key_Type);
+
+       procedure Delete (Container : in out Set;
                          Key       : in     Key_Type);
 
-      procedure Delete (Container : in out Set;
-                        Key       : in     Key_Type);
+       function Find (Container : Set;
+                      Key       : Key_Type)
+          return Cursor;
 
-      function Find (Container : in Set;
-                     Key       : in Key_Type)
-        return Cursor;
+       function Floor (Container : Set;
+                       Key       : Key_Type)
+          return Cursor;
 
-      function Floor (Container : in Set;
-                      Key       : in Key_Type)
-        return Cursor;
+       function Ceiling (Container : Set;
+                         Key       : Key_Type)
+          return Cursor;
 
-      function Ceiling (Container : in Set;
-                        Key       : in Key_Type)
-        return Cursor;
+       function Contains (Container : Set;
+                          Key       : Key_Type) return Boolean;
 
-      function Contains (Container : in Set;
-                         Key       : in Key_Type)
-        return Boolean;
+       procedure Update_Element_Preserving_Key
+         (Container : in out Set;
+          Position  : in     Cursor;
+          Process   : not null access procedure
+                          (Element : in out Element_Type));
 
-      procedure Update_Element_Preserving_Key
-       (Container : in out Set;
-        Position  : in     Cursor;
-        Process   : not null access procedure (Element : in out Element_Type));
+      type Reference_Type
+            (Element : not null access Element_Type) is private
+         with Implicit_Dereference => Element;
+
+      function Reference_Preserving_Key (Container : aliased in out Set;
+                                         Position  : in Cursor)
+         return Reference_Type;
+
+      function Constant_Reference (Container : aliased in Set;
+                                   Key       : in Key_Type)
+         return Constant_Reference_Type;
+
+      function Reference_Preserving_Key (Container : aliased in out Set;
+                                         Key       : in Key_Type)
+         return Reference_Type;
 
    end Generic_Keys;
 
 private
+
+    -- not specified by the language
 
    type Set is tagged null record;
 

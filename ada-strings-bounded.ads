@@ -225,6 +225,11 @@ package Ada.Strings.Bounded is
                             First  : out Positive;
                             Last   : out Natural);
 
+      procedure Find_Token (Source : in Bounded_String;
+                            Set    : in Maps.Character_Set;
+                            Test   : in Membership;
+                            First  : out Positive;
+                            Last   : out Natural);
       -- String translation subprograms
 
       function Translate (Source  : in Bounded_String;
@@ -363,6 +368,3 @@ package Ada.Strings.Bounded is
    end Generic_Bounded_Length;
 
 end Ada.Strings.Bounded;
-
-
-

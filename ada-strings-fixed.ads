@@ -92,6 +92,12 @@ package Ada.Strings.Fixed is
                          First  : out Positive;
                          Last   : out Natural);
 
+   procedure Find_Token (Source : in String;
+                         Set    : in Maps.Character_Set;
+                         Test   : in Membership;
+                         First  : out Positive;
+                         Last   : out Natural);
+
    -- String translation subprograms
 
    function Translate (Source  : in String;
@@ -205,6 +211,3 @@ package Ada.Strings.Fixed is
                  Right : in String) return String;
 
 end Ada.Strings.Fixed;
-
-
-
