@@ -13,9 +13,9 @@ generic
    with function Equivalent_Elements (Left, Right : Element_Type)
                  return Boolean;
    with function "=" (Left, Right : Element_Type) return Boolean is <>;
-package Ada.Containers.Hashed_Sets is
-   pragma Preelaborate(Hashed_Sets);
-   pragma Remote_Types(Hashed_Sets);
+package Ada.Containers.Bounded_Hashed_Sets is
+   pragma Preelaborate(Bounded_Hashed_Sets);
+   pragma Remote_Types(Bounded_Hashed_Sets);
 
   type Set (Capacity : Count_Type;
             Modulus  : Hash_Type) is tagged private
@@ -231,4 +231,4 @@ private
 
     -- not specified by the language
 
-end Ada.Containers.Hashed_Sets;
+end Ada.Containers.Bounded_Hashed_Sets;

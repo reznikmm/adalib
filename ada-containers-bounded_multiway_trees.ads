@@ -10,9 +10,9 @@ with Ada.Iterator_Interfaces;
 generic
    type Element_Type is private;
    with function "=" (Left, Right : Element_Type) return Boolean is <>;
-package Ada.Containers.Multiway_Trees is
-   pragma Pure(Multiway_Trees);
-   pragma Remote_Types(Multiway_Trees);
+package Ada.Containers.Bounded_Multiway_Trees is
+   pragma Pure(Bounded_Multiway_Trees);
+   pragma Remote_Types(Bounded_Multiway_Trees);
 
   type Tree (Capacity : Count_Type) is tagged private
       with Constant_Indexing => Constant_Reference,
@@ -225,4 +225,4 @@ package Ada.Containers.Multiway_Trees is
 
 private
     -- not specified by the language
-end Ada.Containers.Multiway_Trees;
+end Ada.Containers.Bounded_Multiway_Trees;
