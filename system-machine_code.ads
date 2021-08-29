@@ -8,4 +8,6 @@
 ---------------------------------------------------------------------------
 
 package System.Machine_Code is
+   -- The contents of the library package System.Machine_Code (if provided)
+   -- are implementation defined.
 end System.Machine_Code;

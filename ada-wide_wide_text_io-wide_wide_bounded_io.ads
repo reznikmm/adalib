@@ -7,37 +7,38 @@
 --  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
 ---------------------------------------------------------------------------
 
-with Ada.Strings.Wide_Wide_Unbounded;
+with Ada.Strings.Wide_Wide_Bounded;
 
-package Ada.Wide_Wide_Text_IO.Unbounded_IO is
+generic
+   with package Bounded is
+     new Ada.Strings.Wide_Wide_Bounded.Generic_Bounded_Length (<>);
+package Ada.Wide_Wide_Text_IO.Wide_Wide_Bounded_IO is
 
    procedure Put
      (File : in File_Type;
-      Item : in Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+      Item : in Bounded.Wide_Wide_Bounded_String);
 
    procedure Put
-     (Item : in Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+     (Item : in Bounded.Wide_Wide_Bounded_String);
 
    procedure Put_Line
      (File : in File_Type;
-      Item : in Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+      Item : in Bounded.Wide_Wide_Bounded_String);
 
    procedure Put_Line
-     (Item : in Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+     (Item : in Bounded.Wide_Wide_Bounded_String);
 
    function Get_Line
      (File : in File_Type)
-     return Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String;
+     return Bounded.Wide_Wide_Bounded_String;
 
    function Get_Line
-     return Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String;
+     return Bounded.Wide_Wide_Bounded_String;
 
    procedure Get_Line
-     (File : in File_Type;
-      Item : out Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+     (File : in File_Type; Item : out Bounded.Wide_Wide_Bounded_String);
 
    procedure Get_Line
-     (Item : out Strings.Wide_Wide_Unbounded.Wide_Wide_Unbounded_String);
+     (Item : out Bounded.Wide_Wide_Bounded_String);
 
-end Ada.Wide_Wide_Text_IO.Unbounded_IO;
-
+end Ada.Wide_Wide_Text_IO.Wide_Wide_Bounded_IO;
