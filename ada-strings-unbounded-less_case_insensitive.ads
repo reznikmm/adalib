@@ -6,6 +6,6 @@
 --  SPDX-License-Identifier: BSD-3-Clause and LicenseRef-AdaReferenceManual
 ---------------------------------------------------------------------------
 
-function Ada.Strings.Less_Case_Insensitive (Left, Right : String)
-   return Boolean;
-pragma Pure(Ada.Strings.Less_Case_Insensitive);
+function Ada.Strings.Unbounded.Less_Case_Insensitive
+  (Left, Right : Unbounded_String) return Boolean;
+pragma Preelaborate(Ada.Strings.Unbounded.Less_Case_Insensitive);

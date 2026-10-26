@@ -12,7 +12,7 @@ generic
    type Element_Type (<>) is private;
    with function "<" (Left, Right : Element_Type) return Boolean is <>;
    with function "=" (Left, Right : Element_Type) return Boolean is <>;
-package Ada.Containers.Ordered_Sets is
+package Ada.Containers.Indefinite_Ordered_Sets is
    pragma Preelaborate(Ordered_Sets);
    pragma Remote_Types(Ordered_Sets);
 
@@ -266,4 +266,4 @@ private
 
     -- not specified by the language
 
-end Ada.Containers.Ordered_Sets;
+end Ada.Containers.Indefinite_Ordered_Sets;
